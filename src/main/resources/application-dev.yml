@@ -21,6 +21,7 @@ mybatis:
   configuration:
     default-fetch-size: 20
     use-generated-keys: true # 是否返回主键
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #  default-statement-timeout: 30  # 单位毫秒
 
 excelAddress: /src/main/resources/excels/

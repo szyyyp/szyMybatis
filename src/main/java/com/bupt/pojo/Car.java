@@ -15,6 +15,6 @@ public class Car {
     String brand;
     Double guidePrice;
     String carType;
-    String productTime;
+    String produceTime;
 
 }

@@ -9,12 +9,12 @@
         <result column="guide_price" jdbcType="FLOAT" property="guidePrice" />
         <result column="car_type" jdbcType="VARCHAR" property="carType" />
         <result column="car_type" jdbcType="INTEGER" property="carType" />
-        <result column="product_time" jdbcType="TIMESTAMP" property="productTime" />
+        <result column="produce_time" jdbcType="TIMESTAMP" property="produceTime" />
     </resultMap>
 
     <insert id="insert">
-        insert into t_car(id,car_num,brand,guide_price,produce_time,car_type)
-        values(null,#{carNum},#{brand},#{guidePrice},#{produceTime},#{carType})
+        insert into t_car(id,car_num,brand,guide_price,car_type,produce_time)
+        values(null,#{carNum},#{brand,jdbcType=VARCHAR},#{guidePrice},#{carType,jdbcType=VARCHAR},#{produceTime})
     </insert>
 
     <!--如果占位符只有一个，其实可以随便写里面的内容但不能不写，但最好见名知意，这次只是测试-->
