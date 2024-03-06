@@ -12,7 +12,7 @@
         <result column="produce_time" jdbcType="TIMESTAMP" property="produceTime" />
     </resultMap>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into t_car(id,car_num,brand,guide_price,car_type,produce_time)
         values(null,#{carNum},#{brand,jdbcType=VARCHAR},#{guidePrice},#{carType,jdbcType=VARCHAR},#{produceTime})
     </insert>

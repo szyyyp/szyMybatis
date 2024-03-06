@@ -21,4 +21,11 @@ class CarDaoTest  {
         List<Car> lst = carDao.findAll();
         System.out.println(lst);
     }
+
+    @Test
+    public void insertCar(){
+        Car car = new Car(null,"111","丰田",150.00,"新能源","2023-03-06");
+        int i = carDao.insert(car);
+        System.out.println(car.getId());
+    }
 }
