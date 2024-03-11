@@ -14,9 +14,10 @@ spring:
       max-request-size: 1024000000
 
 
-mybatis:
+mybatis-plus:
   type-aliases-package: org.bupt.pojo
-  mapper-locations: classpath:com/mappers/*.xml
+  # mapper-locations: classpath:com/mappers/*.xml
+  mapper-locations: com/mappers/*.xml
   executor-type: simple # reuse 可以提高性能
   configuration:
     default-fetch-size: 20

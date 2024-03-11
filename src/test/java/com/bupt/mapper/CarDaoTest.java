@@ -1,11 +1,22 @@
 package com.bupt.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bupt.pojo.Car;
+import com.bupt.pojo.TStudent;
+import com.bupt.service.CarServiceImpl;
+import com.bupt.service.UserService;
+import com.ejlchina.searcher.BeanSearcher;
+import com.ejlchina.searcher.SearchResult;
+import com.ejlchina.searcher.operator.Contain;
+import com.ejlchina.searcher.operator.NotEmpty;
+import com.ejlchina.searcher.util.MapUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 直接使用junit的单元测试方法
@@ -15,17 +26,53 @@ import java.util.List;
 class CarDaoTest  {
     @Autowired
     CarDao carDao;
+    @Autowired
+    BeanSearcher beanSearcher;
+    @Autowired
+    CarServiceImpl carService;
+    @Resource
+    UserService userService;
 
     @Test
     public void findAll() {
-        List<Car> lst = carDao.findAll();
+        LambdaQueryWrapper<Car> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Car::getBrand,"丰田");
+        List<Car> lst = carDao.selectList(queryWrapper);
         System.out.println(lst);
     }
 
     @Test
     public void insertCar(){
-        Car car = new Car(null,"111","丰田",150.00,"新能源","2023-03-06");
+        Car car = new Car(null,"221","丰田",150.00,"新能源","2023-03-06");
         int i = carDao.insert(car);
+
         System.out.println(car.getId());
+    }
+
+    @Test
+    void getSearch(){
+        Map<String, Object> params = MapUtils.builder()
+                .page(0,10)                                    //第1页10条
+                .orderBy(TStudent::getAge).desc()               // age 字段，降序
+                .onlySelect(TStudent::getName, TStudent::getAge)  //只查询 age 与 name 字段
+                .field(TStudent::getName).op("小红")             //查询 name 等于 小红 的用户
+                .field(TStudent::getName).op(NotEmpty.class)    //查询 name 不为空的用户
+                .field(TStudent::getName, "小红").op(Contain.class)    // 查询 name 中包含字符串 小红 的用户
+                .build();
+        SearchResult<TStudent> search = beanSearcher.search(TStudent.class, params);
+        List<TStudent> dataList = search.getDataList();        //获取数据列表
+        Number totalCount = search.getTotalCount();           //获取数据总数
+        System.out.println(dataList);
+        System.out.println(totalCount);
+    }
+
+    @Test
+    void testSaveBatch(){
+        carService.saveBatch();
+    }
+
+    @Test
+    void testUerMapper(){
+        userService.InsertUsers();
     }
 }
