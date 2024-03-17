@@ -1,12 +1,14 @@
 package com.bupt.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 @Data
+@TableName("user")
 public class User {
     Integer id;
-    String username;
+    String name;
     String password;
 
     Date birthday;

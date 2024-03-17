@@ -1,5 +1,6 @@
 package com.bupt.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import com.bupt.mapper.CarDao;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CarServiceImpl extends ServiceImpl<CarDao,Car> implements CarService{
+public class CarServiceImpl extends BaseServiceImpl<CarDao,Car> implements IService<Car> {
     @Resource
     CarDao carDao;
    public void saveBatch() {
@@ -21,10 +22,14 @@ public class CarServiceImpl extends ServiceImpl<CarDao,Car> implements CarServic
             car.setCarNum("test:" + i);
             car.setBrand("123456");
             list.add(car);
+
         }
         // 批量插入
         this.saveBatch(list);
+
         long etime = System.currentTimeMillis(); // 统计结束时间
         System.out.println("执行时间：" + (etime - stime));
     }
+
+
 }

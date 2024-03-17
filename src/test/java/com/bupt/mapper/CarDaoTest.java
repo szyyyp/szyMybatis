@@ -1,6 +1,9 @@
 package com.bupt.mapper;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.bupt.pojo.Car;
 import com.bupt.pojo.TStudent;
 import com.bupt.service.CarServiceImpl;
@@ -10,6 +13,9 @@ import com.ejlchina.searcher.SearchResult;
 import com.ejlchina.searcher.operator.Contain;
 import com.ejlchina.searcher.operator.NotEmpty;
 import com.ejlchina.searcher.util.MapUtils;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +48,18 @@ class CarDaoTest  {
     }
 
     @Test
+    public void testMethod(){
+        QueryWrapper<Car> wrapper=new QueryWrapper<>();
+        Car car = new Car();
+        car.setBrand("1234");
+        wrapper.eq(car.getBrand()!=null
+        , "brand","丰田");
+        List<Car> lst = carDao.selectList(wrapper);
+        System.out.println(lst);
+    }
+
+
+    @Test
     public void insertCar(){
         Car car = new Car(null,"221","丰田",150.00,"新能源","2023-03-06");
         int i = carDao.insert(car);
@@ -71,6 +89,24 @@ class CarDaoTest  {
         carService.saveBatch();
     }
 
+    @Test
+    void testGetUserPage(){
+        LambdaQueryWrapper<Car> query = new LambdaQueryWrapper<>();
+        query.like(Car::getCarNum,"test")
+                .orderByDesc(Car::getCarType);
+        PageHelper.startPage(3, 20,"id desc");
+        List<Car> cars = carService.list(query);
+        PageInfo<Car> pageInfo = new PageInfo<>(cars);
+        System.out.println(JSON.toJSONString(pageInfo));
+    }
+
+    @Test
+    void testEntityFind(){
+        Car car = new Car();
+        car.setBrand("1234");
+        car.setCarNum("111");
+        System.out.println(carService.findPageInfo(car));
+    }
     @Test
     void testUerMapper(){
         userService.InsertUsers();
