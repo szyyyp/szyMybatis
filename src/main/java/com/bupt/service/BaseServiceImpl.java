@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -20,10 +23,11 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
     public PageInfo<T> findPageInfo(T t){
         QueryWrapper<T> query = getWrapper(t);
 
-        PageHelper.startPage(1, 10,"id desc");
+        PageHelper.startPage(1, 10).setOrderBy("id desc");
 
         List<T> lts = this.list(query);
         PageInfo<T> pageInfo = new PageInfo<>(lts);
+
         return pageInfo;
     }
  
@@ -41,7 +45,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
                         continue;
                     query.like(d.getColumn(), value);
                 } else {
-                    query.eq(name, value);
+                    query.eq(d.getColumn(), value);
                 }
             }
 
@@ -49,7 +53,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
         return query;
     }
 
-    public  Object getFieldValueByName(String fieldName, Object o) {
+    private  Object getFieldValueByName(String fieldName, Object o) {
         try {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
@@ -59,5 +63,18 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
             //   log.error(e.getMessage(),e);
             return null;
         }
+    }
+
+    /**
+     * SFunction 转换为字段名
+     * @param func
+     * @return
+     * @param <T>
+     */
+    private static <T> String lN(SFunction<T, ?> func) {
+        SerializedLambda resolve = LambdaUtils.resolve(func);
+        String get = resolve.getImplMethodName().replace("get", "");
+        get = get.substring(0, 1).toLowerCase() + get.substring(1);
+        return get;
     }
 }

@@ -1,5 +1,9 @@
 package com.bupt.util;
 
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -28,5 +32,12 @@ public class reflexUtil {
             class1=class1.getSuperclass();
         }
         return list;
+    }
+
+    private static <T> String lN(SFunction<T, ?> func) {
+        SerializedLambda resolve = LambdaUtils.resolve(func);
+        String get = resolve.getImplMethodName().replace("get", "");
+        get = get.substring(0, 1).toLowerCase() + get.substring(1);
+        return get;
     }
 }
