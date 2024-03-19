@@ -1,13 +1,8 @@
 package com.bupt;
 
-import com.bupt.mapper.CarDao;
-import com.bupt.pojo.Car;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootApplication
 public class szyMybatisApplication {

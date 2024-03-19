@@ -1,7 +1,6 @@
 package com.bupt.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import com.bupt.mapper.CarDao;
 import com.bupt.pojo.Car;

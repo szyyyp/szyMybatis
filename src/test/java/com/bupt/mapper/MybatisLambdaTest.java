@@ -1,8 +1,8 @@
 package com.bupt.mapper;
 
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import lombok.Data;
 
 public class MybatisLambdaTest {
@@ -20,8 +20,8 @@ public class MybatisLambdaTest {
     }
 
     private static <T> String lN(SFunction<T, ?> func) {
-        SerializedLambda resolve = LambdaUtils.resolve(func);
-        String get = resolve.getImplMethodName().replace("get", "");
+        LambdaMeta lambdaMeta = LambdaUtils.extract(func);
+        String get = lambdaMeta.getImplMethodName().replace("get", "");
         get = get.substring(0, 1).toLowerCase() + get.substring(1);
         return get;
     }

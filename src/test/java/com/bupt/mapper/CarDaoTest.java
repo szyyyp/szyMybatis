@@ -1,9 +1,7 @@
 package com.bupt.mapper;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.bupt.pojo.Car;
 import com.bupt.pojo.TStudent;
 import com.bupt.service.CarServiceImpl;
@@ -13,14 +11,12 @@ import com.ejlchina.searcher.SearchResult;
 import com.ejlchina.searcher.operator.Contain;
 import com.ejlchina.searcher.operator.NotEmpty;
 import com.ejlchina.searcher.util.MapUtils;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +32,7 @@ class CarDaoTest  {
     BeanSearcher beanSearcher;
     @Autowired
     CarServiceImpl carService;
-    @Resource
+    @Autowired
     UserService userService;
 
     @Test
@@ -97,7 +93,7 @@ class CarDaoTest  {
         PageHelper.startPage(3, 20,"id desc");
         List<Car> cars = carService.list(query);
         PageInfo<Car> pageInfo = new PageInfo<>(cars);
-        System.out.println(JSON.toJSONString(pageInfo));
+        System.out.println(pageInfo);
     }
 
     @Test

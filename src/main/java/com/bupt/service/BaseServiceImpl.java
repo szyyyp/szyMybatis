@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -26,9 +26,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
         PageHelper.startPage(1, 10).setOrderBy("id desc");
 
         List<T> lts = this.list(query);
-        PageInfo<T> pageInfo = new PageInfo<>(lts);
 
-        return pageInfo;
+        return new PageInfo<>(lts);
     }
  
     private  QueryWrapper<T> getWrapper(T t) {
@@ -67,13 +66,10 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
 
     /**
      * SFunction 转换为字段名
-     * @param func
-     * @return
-     * @param <T>
      */
     private static <T> String lN(SFunction<T, ?> func) {
-        SerializedLambda resolve = LambdaUtils.resolve(func);
-        String get = resolve.getImplMethodName().replace("get", "");
+        LambdaMeta lambdaMeta = LambdaUtils.extract(func);
+        String get = lambdaMeta.getImplMethodName().replace("get", "");
         get = get.substring(0, 1).toLowerCase() + get.substring(1);
         return get;
     }

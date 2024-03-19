@@ -1,16 +1,19 @@
 package com.bupt.page;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * 筛选
  * 查询条件
  */
+@Data
 public class Filter implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -8712382358441065075L;
 
 	/**
@@ -281,101 +284,4 @@ public class Filter implements Serializable {
 		this.ignoreCase = true;
 		return this;
 	}
-
-	/**
-	 * 获取属性
-	 * 
-	 * @return 属性
-	 */
-	public String getProperty() {
-		return property;
-	}
-
-	/**
-	 * 设置属性
-	 * 
-	 * @param property
-	 *            属性
-	 */
-	public void setProperty(String property) {
-		this.property = property;
-	}
-
-	/**
-	 * 获取运算符
-	 * 
-	 * @return 运算符
-	 */
-	public Operator getOperator() {
-		return operator;
-	}
-
-	/**
-	 * 设置运算符
-	 * 
-	 * @param operator
-	 *            运算符
-	 */
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-
-	/**
-	 * 获取值
-	 * 
-	 * @return 值
-	 */
-	public Object getValue() {
-		return value;
-	}
-
-	/**
-	 * 设置值
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	/**
-	 * 获取是否忽略大小写
-	 * 
-	 * @return 是否忽略大小写
-	 */
-	public Boolean getIgnoreCase() {
-		return ignoreCase;
-	}
-
-	/**
-	 * 设置是否忽略大小写
-	 * 
-	 * @param ignoreCase
-	 *            是否忽略大小写
-	 */
-	public void setIgnoreCase(Boolean ignoreCase) {
-		this.ignoreCase = ignoreCase;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		Filter other = (Filter) obj;
-		return new EqualsBuilder().append(getProperty(), other.getProperty()).append(getOperator(), other.getOperator()).append(getValue(), other.getValue()).isEquals();
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(getProperty()).append(getOperator()).append(getValue()).toHashCode();
-	}
-
 }
