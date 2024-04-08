@@ -2,13 +2,16 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bupt.page.Pageable;
 import com.bupt.pojo.Dept;
-import com.bupt.pojo.Class;
+import com.bupt.pojo.BanJi;
 import com.bupt.pojo.Student;
+import com.bupt.service.BanJiAndStudentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +22,13 @@ public class MyTest {
     private DeptDao deptDao;
 
     @Autowired
-    private ClassDao classDao;
+    private BanJiDao banJiDao;
 
     @Autowired
     private StudentDao studentDao;
+
+    @Resource
+    private BanJiAndStudentServiceImpl banJiAndStudentService;
 
     @Test
     void test01(){
@@ -32,10 +38,10 @@ public class MyTest {
 
         for (Dept dept : depts) {
             //1、根据部门ID查看班级信息
-            List<Class> classList = classDao.selectList(new QueryWrapper<Class>().eq("did", dept.getDid()));
+            List<BanJi> classList = banJiDao.selectList(new QueryWrapper<BanJi>().eq("did", dept.getDid()));
             dept.setClassList(classList);
             //2、根据班级ID查看学生信息
-            for (Class aClass : classList) {
+            for (BanJi aClass : classList) {
                 List<Student> studentList = studentDao.selectList(new QueryWrapper<Student>().eq("cid", aClass.getCid()));
                 aClass.setStudentList(studentList);
             }
@@ -46,4 +52,11 @@ public class MyTest {
 
     }
 
+
+    @Test
+    public void showPage(){
+        Pageable page = new Pageable(1,20);
+        BanJi banJi = new BanJi();
+        banJiAndStudentService.findHead(page,banJi);
+    }
 }

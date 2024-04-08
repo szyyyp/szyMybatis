@@ -13,6 +13,6 @@ public class Dept {
     private String dname;
 
     @TableField(exist = false)
-    private List<Class> classList;
+    private List<BanJi> classList;
 
 }

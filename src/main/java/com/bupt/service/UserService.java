@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-public class UserService extends ServiceImpl<UserMapper,User> implements IService<User> {
+public class UserService extends ServiceImpl<UserMapper,User>  {
 
     @Resource
     private UserMapper userMapper;
@@ -24,7 +24,7 @@ public class UserService extends ServiceImpl<UserMapper,User> implements IServic
             user.setPassword("password" + i);
             userList.add(user);
         }
-        userMapper.insertBatchSomeColumn(userList);
+        this.saveBatch(userList);
         long end = System.currentTimeMillis();
         System.out.println("一万条数据总耗时：" + (end-start) + "ms" );
     }

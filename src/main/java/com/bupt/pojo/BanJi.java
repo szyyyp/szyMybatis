@@ -1,11 +1,13 @@
 package com.bupt.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.List;
 @Data
-public class Class {
+@TableName("class")
+public class BanJi {
 
     private Integer cid;
 

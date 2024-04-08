@@ -1,19 +1,20 @@
 package com.bupt.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Service;
 import com.bupt.mapper.CarDao;
 import com.bupt.pojo.Car;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CarServiceImpl extends BaseServiceImpl<CarDao,Car> implements IService<Car> {
-    @Resource
-    CarDao carDao;
-   public void saveBatch() {
+public class CarServiceImpl extends BaseServiceImpl<CarDao,Car>  {
+    public CarServiceImpl() {
+        super();
+    }
+
+    public void saveBatch() {
         long stime = System.currentTimeMillis(); // 统计开始时间
         List<Car> list = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
