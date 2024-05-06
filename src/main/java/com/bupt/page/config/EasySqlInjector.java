@@ -1,4 +1,4 @@
-package com.bupt.config;
+package com.bupt.page.config;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;

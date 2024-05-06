@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BanJiAndStudentServiceImpl extends
-        HeadAndDetail<BanJiDao, BanJi, StudentDao, Student>
+        BillServiceImpl<BanJiDao, BanJi, StudentDao, Student>
 {
 
 
     @Override
-    public boolean addHead(BanJi h) {
+    public boolean addHead(BanJi h,Student t) {
         return false;
     }
 }

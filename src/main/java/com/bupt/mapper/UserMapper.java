@@ -1,6 +1,6 @@
 package com.bupt.mapper;
 
-import com.bupt.config.EasyBaseMapper;
+import com.bupt.page.config.EasyBaseMapper;
 import com.bupt.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
