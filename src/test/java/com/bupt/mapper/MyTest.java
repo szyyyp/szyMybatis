@@ -2,7 +2,6 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bupt.result.page.Pageable;
 import com.bupt.pojo.Dept;
 import com.bupt.pojo.BanJi;
 import com.bupt.pojo.Student;
@@ -25,9 +24,6 @@ public class MyTest {
 
     @Autowired
     private StudentDao studentDao;
-
-    @Resource
-    private BanJiAndStudentServiceImpl banJiAndStudentService;
 
     @Test
     void test01(){
@@ -52,10 +48,4 @@ public class MyTest {
     }
 
 
-    @Test
-    public void showPage(){
-        Pageable page = new Pageable();
-        BanJi banJi = new BanJi();
-        banJiAndStudentService.findHead(page,banJi);
-    }
 }

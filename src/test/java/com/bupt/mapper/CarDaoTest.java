@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.bupt.pojo.Car;
 import com.bupt.pojo.TStudent;
+import com.bupt.result.page.Filter;
 import com.bupt.result.page.Pageable;
 import com.bupt.service.CarServiceImpl;
 import com.bupt.service.UserService;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +101,16 @@ class CarDaoTest  {
 
         orders.add(OrderItem.desc("guide_price"));
         pageable.setOrders(orders);
+
+        Filter f = new Filter();
+        f.setProperty("car_type");
+        f.setOperator(Filter.Operator.in);
+        List<String> lst = Arrays.asList("汽油车", "新能源");
+        List<Integer> idList = Arrays.asList(1, 2, 3, 4);
+        f.setValue("汽油车");
+       // f.setValue(idList);
+        pageable.getFilters().add(f);
+
         System.out.println(JSON.toJSON(carService.findPageInfo(car,pageable)));
     }
     @Test

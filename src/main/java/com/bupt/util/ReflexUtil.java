@@ -2,20 +2,19 @@ package com.bupt.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bupt.result.page.PageResult;
 import com.bupt.result.page.Pageable;
 import com.bupt.result.page.Filter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ReflexUtil {
@@ -71,7 +70,7 @@ public final class ReflexUtil {
         return get;
     }
 
-    public static <T> QueryWrapper<T> getWrapper(T t) {
+    private static <T> QueryWrapper<T> getWrapper(T t) {
         QueryWrapper<T> query = new QueryWrapper<>();
         TableInfo tableInfo = TableInfoHelper.getTableInfo(t.getClass());
         List<TableFieldInfo> tableFieldInfos = tableInfo.getFieldList();
@@ -127,9 +126,8 @@ public final class ReflexUtil {
                     query.isNull(filter.getProperty());
                     break;
                 case in:
-                    query.in(filter.getProperty(),filter.getValue().toString()
-                            .replace("[","")
-                            .replace("]","").split(","));
+                    List<Object>  lst = Arrays.asList(filter.getValue());
+                    query.in(filter.getProperty(),lst);
                     break;
             }
         }
