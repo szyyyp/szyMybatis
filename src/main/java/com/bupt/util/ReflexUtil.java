@@ -2,6 +2,7 @@ package com.bupt.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
@@ -9,12 +10,12 @@ import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bupt.page.Pageable;
+import com.bupt.result.page.PageResult;
+import com.bupt.result.page.Pageable;
+import com.bupt.result.page.Filter;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class ReflexUtil {
@@ -27,16 +28,21 @@ public final class ReflexUtil {
      * @return 实体 t 的分页查询结果
      * @param <T>
      */
-    public static <T> Page<T> findByEntity(BaseMapper<T> dao, Pageable page, T t){
-        QueryWrapper<T> query = getWrapper(t);
-        Page<T> p = new Page<>();
-        p.setCurrent(page.getPage()).setSize(page.getRows());
+    public static <T> PageResult<T> findPage(BaseMapper<T> dao, Pageable page, T t){
+        List<Filter> lstFilters = new ArrayList<>() ;
+        lstFilters = page.getFilters();
+        QueryWrapper<T> query = getWrapper(lstFilters,t);
+
+        PageResult<T> p = new PageResult<>();
+        p.setCurrent(page.getPage()).setSize(page.getSize());
+        p.setOrders(page.getOrders());
+
         dao.selectPage(p,query);
         return p;
 
     }
 
-    public static Object getFieldValueByName(String fieldName, Object o) {
+    private static Object getFieldValueByName(String fieldName, Object o) {
         try {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
@@ -47,8 +53,8 @@ public final class ReflexUtil {
             return null;
         }
     }
-
-    public static List<Field> getAllField(Class<?> class1){
+/*
+    private static List<Field> getAllField(Class<?> class1){
         List<Field> list= new ArrayList<>();
         while (class1!= Object.class){
             list.addAll(Arrays.stream(class1.getDeclaredFields()).toList());
@@ -56,7 +62,7 @@ public final class ReflexUtil {
             class1=class1.getSuperclass();
         }
         return list;
-    }
+    }*/
 
     private static <T> String lN(SFunction<T, ?> func) {
         LambdaMeta lambdaMeta = LambdaUtils.extract(func);
@@ -84,6 +90,50 @@ public final class ReflexUtil {
             }
 
         }
+        return query;
+    }
+
+    public static <T>QueryWrapper<T> getWrapper(List<Filter> lstFilters,T t){
+        QueryWrapper<T> query = new QueryWrapper<>();
+        query = getWrapper(t);
+
+        for (Filter filter : lstFilters) {
+            switch (filter.getOperator()){
+                case like:
+                    query.like(filter.getProperty(),filter.getValue());
+                    break;
+                case eq:
+                    query.eq(filter.getProperty(),filter.getValue());
+                    break;
+                case ne:
+                    query.ne(filter.getProperty(),filter.getValue());
+                    break;
+                case ge:
+                    query.ge(filter.getProperty(),filter.getValue());
+                    break;
+                case le:
+                    query.le(filter.getProperty(),filter.getValue());
+                    break;
+                case gt:
+                    query.gt(filter.getProperty(),filter.getValue());
+                    break;
+                case lt:
+                    query.lt(filter.getProperty(),filter.getValue());
+                    break;
+                case isNotNull:
+                    query.isNotNull(filter.getProperty());
+                    break;
+                case isNull:
+                    query.isNull(filter.getProperty());
+                    break;
+                case in:
+                    query.in(filter.getProperty(),filter.getValue().toString()
+                            .replace("[","")
+                            .replace("]","").split(","));
+                    break;
+            }
+        }
+
         return query;
     }
 }

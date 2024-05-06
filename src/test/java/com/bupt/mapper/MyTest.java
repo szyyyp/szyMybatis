@@ -2,11 +2,10 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bupt.page.Pageable;
+import com.bupt.result.page.Pageable;
 import com.bupt.pojo.Dept;
 import com.bupt.pojo.BanJi;
 import com.bupt.pojo.Student;
-import com.bupt.service.BanJiAndStudentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,7 +54,7 @@ public class MyTest {
 
     @Test
     public void showPage(){
-        Pageable page = new Pageable(1,20);
+        Pageable page = new Pageable();
         BanJi banJi = new BanJi();
         banJiAndStudentService.findHead(page,banJi);
     }

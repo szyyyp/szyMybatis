@@ -3,7 +3,7 @@ package com.bupt.service;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bupt.page.Pageable;
+import com.bupt.result.page.Pageable;
 import com.bupt.util.ReflexUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +32,11 @@ public abstract class BillServiceImpl<HeadMapper extends BaseMapper<Head>, Head,
     DetailMapper detailMapper;
 
     public Page<Head> findHead(Pageable page,Head h){
-        return ReflexUtil.findByEntity(headMapper,page,h);
+        return ReflexUtil.findPage(headMapper,page,h);
     }
 
     public Page<Detail> findDetail(Pageable page,Detail t){
-        return ReflexUtil.findByEntity(detailMapper,page,t);
+        return ReflexUtil.findPage(detailMapper,page,t);
     }
 
     @Transactional
