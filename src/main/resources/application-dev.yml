@@ -26,3 +26,13 @@ mybatis-plus:
   #  default-statement-timeout: 30  # 单位毫秒
 
 excelAddress: /src/main/resources/excels/
+
+bean-searcher:
+  sql:
+    default-mapping:
+      redundant-suffixes: DTO
+  params:
+    pagination:
+      default-size: 10
+      start: 1
+    separator: 'x'
