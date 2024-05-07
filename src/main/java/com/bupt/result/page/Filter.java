@@ -1,4 +1,4 @@
-package com.bupt.page;
+package com.bupt.result.page;
 
 
 import lombok.Data;

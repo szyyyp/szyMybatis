@@ -1,9 +1,13 @@
 package com.bupt.mapper;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.bupt.pojo.Car;
 import com.bupt.pojo.TStudent;
+import com.bupt.result.page.Filter;
+import com.bupt.result.page.Pageable;
 import com.bupt.service.CarServiceImpl;
 import com.bupt.service.UserService;
 import com.ejlchina.searcher.BeanSearcher;
@@ -11,13 +15,13 @@ import com.ejlchina.searcher.SearchResult;
 import com.ejlchina.searcher.operator.Contain;
 import com.ejlchina.searcher.operator.NotEmpty;
 import com.ejlchina.searcher.util.MapUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -86,23 +90,28 @@ class CarDaoTest  {
         carService.saveBatch();
     }
 
-    @Test
-    void testGetUserPage(){
-        LambdaQueryWrapper<Car> query = new LambdaQueryWrapper<>();
-        query.like(Car::getCarNum,"test")
-                .orderByDesc(Car::getCarType);
-        PageHelper.startPage(3, 20,"id desc");
-        List<Car> cars = carService.list(query);
-        PageInfo<Car> pageInfo = new PageInfo<>(cars);
-        System.out.println(pageInfo);
-    }
 
     @Test
     void testEntityFind(){
         Car car = new Car();
-        car.setBrand("1234");
+        car.setBrand("丰田");
         car.setCarNum("111");
-        System.out.println(carService.findPageInfo(car));
+        Pageable pageable = new Pageable();
+        List<OrderItem> orders = new ArrayList<>();
+
+        orders.add(OrderItem.desc("guide_price"));
+        pageable.setOrders(orders);
+
+        Filter f = new Filter();
+        f.setProperty("car_type");
+        f.setOperator(Filter.Operator.in);
+        List<String> lst = Arrays.asList("汽油车", "新能源");
+        List<Integer> idList = Arrays.asList(1, 2, 3, 4);
+        f.setValue("汽油车");
+       // f.setValue(idList);
+        pageable.getFilters().add(f);
+
+        System.out.println(JSON.toJSON(carService.findPageInfo(car,pageable)));
     }
     @Test
     void testUerMapper(){
