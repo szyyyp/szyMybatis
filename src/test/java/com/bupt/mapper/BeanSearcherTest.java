@@ -2,7 +2,6 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson2.JSON;
 import com.bupt.pojo.Performance;
-import com.bupt.pojo.PurchaseOrder;
 import com.bupt.pojo.Student;
 import com.bupt.result.HttpResult;
 import com.bupt.result.HttpResultCodeEnum;
@@ -10,7 +9,6 @@ import com.bupt.result.page.*;
 import com.bupt.util.PageUtil;
 import com.ejlchina.searcher.BeanSearcher;
 import com.ejlchina.searcher.SearchResult;
-import com.mysql.cj.xdevapi.JsonArray;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -38,7 +36,7 @@ public class BeanSearcherTest {
         filter.setStringOperator("il");
         filter.setValue(list);
         filters.add(filter);
-        pageable.setOrder(Pageable.Order.valueOf("asc"));
+        pageable.setOrder("asc");
         pageable.setPage(1);
         pageable.setSize(5);
         pageable.setFilters(filters);
@@ -68,7 +66,7 @@ public class BeanSearcherTest {
         filter.setStringOperator("bt");
         filter.setValue(list);
         filters.add(filter);
-        pageable.setOrder(Pageable.Order.valueOf("asc"));
+        pageable.setOrder("asc");
         pageable.setPage(1);
         pageable.setSize(5);
         pageable.setFilters(filters);

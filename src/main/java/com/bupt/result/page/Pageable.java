@@ -19,23 +19,10 @@ public class Pageable<T> {
 
     protected List<OrderItem> orders;
 
-    public enum Order {
-
-        /**
-         * 递增
-         */
-        asc,
-
-        /**
-         * 递减
-         */
-        desc;
-    }
-
     /**
      * 默认排序方向
      */
-    private static final Order DEFAULT_ORDER = Order.desc;
+    private static final String DEFAULT_ORDER = "desc";
 
     /**
      * 默认排序属性
@@ -70,7 +57,7 @@ public class Pageable<T> {
     /**
      * 排序方向
      */
-    private Order order = DEFAULT_ORDER;
+    private String order = DEFAULT_ORDER;
 
     /**
      * 筛选
