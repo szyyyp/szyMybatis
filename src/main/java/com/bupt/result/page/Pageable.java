@@ -73,11 +73,6 @@ public class Pageable<T> {
     private Order order = DEFAULT_ORDER;
 
     /**
-     * 前端 String 类型排序方向
-     */
-    private String stringOrder;
-
-    /**
      * 筛选
      */
     private List<Filter> filters = new ArrayList<>();
