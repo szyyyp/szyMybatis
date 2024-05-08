@@ -4,9 +4,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bean_searcher_demo?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=utf-8
     username: root
-    password: tsgl
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    password: '`1234qwer'
 
   servlet:
     multipart:

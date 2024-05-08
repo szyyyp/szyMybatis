@@ -104,7 +104,7 @@ class CarDaoTest  {
 
         Filter f = new Filter();
         f.setProperty("car_type");
-        f.setOperator(Filter.Operator.in);
+        f.setOperator(Filter.Operator.il);
         List<String> lst = Arrays.asList("汽油车", "新能源");
         List<Integer> idList = Arrays.asList(1, 2, 3, 4);
         f.setValue("汽油车");

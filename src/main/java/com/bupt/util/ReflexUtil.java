@@ -98,7 +98,7 @@ public final class ReflexUtil {
 
         for (Filter filter : lstFilters) {
             switch (filter.getOperator()){
-                case like:
+                case ct:
                     query.like(filter.getProperty(),filter.getValue());
                     break;
                 case eq:
@@ -119,13 +119,13 @@ public final class ReflexUtil {
                 case lt:
                     query.lt(filter.getProperty(),filter.getValue());
                     break;
-                case isNotNull:
+                case nn:
                     query.isNotNull(filter.getProperty());
                     break;
-                case isNull:
+                case nl:
                     query.isNull(filter.getProperty());
                     break;
-                case in:
+                case il:
                     List<Object>  lst = Arrays.asList(filter.getValue());
                     query.in(filter.getProperty(),lst);
                     break;
