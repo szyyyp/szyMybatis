@@ -1,6 +1,6 @@
 package com.bupt.mapper;
 
-import com.bupt.pojo.Order;
+import com.bupt.pojoTest.Order;
 
 public interface OrderDao extends BaseDao<Order,Long> {
 

@@ -4,8 +4,8 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.bupt.pojo.Car;
-import com.bupt.pojo.TStudent;
+import com.bupt.pojoTest.Car;
+import com.bupt.pojoTest.TStudent;
 import com.bupt.result.page.Filter;
 import com.bupt.result.page.Pageable;
 import com.bupt.service.CarServiceImpl;
@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

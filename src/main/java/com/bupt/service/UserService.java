@@ -1,9 +1,8 @@
 package com.bupt.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bupt.mapper.UserMapper;
-import com.bupt.pojo.User;
+import com.bupt.pojoTest.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

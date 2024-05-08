@@ -2,14 +2,13 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bupt.pojo.Dept;
-import com.bupt.pojo.BanJi;
-import com.bupt.pojo.Student;
+import com.bupt.pojoTest.Dept;
+import com.bupt.pojoTest.BanJi;
+import com.bupt.pojoTest.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

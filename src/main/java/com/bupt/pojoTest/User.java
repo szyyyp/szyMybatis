@@ -1,4 +1,4 @@
-package com.bupt.pojo;
+package com.bupt.pojoTest;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

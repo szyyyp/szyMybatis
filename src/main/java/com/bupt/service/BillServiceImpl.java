@@ -40,10 +40,10 @@ public abstract class BillServiceImpl<HeadMapper extends BaseMapper<Head>, Head,
     }
 
     @Transactional
-    public abstract boolean addHead(Head h,Detail d);
+    public abstract boolean addBill(Head h,Detail d);
 
     @Transactional
-    public boolean deleteHead(Head h){
+    public boolean delBill(Head h){
         // todo 先删除子表数据，再删除主表
 
         return true;

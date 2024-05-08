@@ -1,7 +1,7 @@
 package com.bupt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bupt.pojo.Dept;
+import com.bupt.pojoTest.Dept;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

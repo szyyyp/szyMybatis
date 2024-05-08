@@ -1,4 +1,4 @@
-package com.bupt.pojo;
+package com.bupt.pojoTest;
 
 import com.ejlchina.searcher.bean.SearchBean;
 import lombok.Data;

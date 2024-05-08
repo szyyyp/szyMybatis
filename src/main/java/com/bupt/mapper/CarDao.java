@@ -1,10 +1,8 @@
 package com.bupt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bupt.pojo.Car;
+import com.bupt.pojoTest.Car;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface CarDao extends BaseMapper<Car> {

@@ -92,7 +92,8 @@ public final class ReflexUtil {
     }
 
     public static <T> QueryWrapper<T> getWrapper(Pageable pageable) {
-        QueryWrapper<T> query = new QueryWrapper<>();
+        QueryWrapper<T> query = (QueryWrapper<T>) getWrapper(pageable.getT().getClass());
+        /*new QueryWrapper<>();
         TableInfo tableInfo = TableInfoHelper.getTableInfo(pageable.getT().getClass());
         List<TableFieldInfo> tableFieldInfos = tableInfo.getFieldList();
 
@@ -108,7 +109,7 @@ public final class ReflexUtil {
                     query.eq(d.getColumn(), value);
                 }
             }
-        }
+        }*/
 
         List<Filter> lstFilters = List.copyOf(pageable.getFilters());
         for (Filter filter : lstFilters) {

@@ -1,9 +1,8 @@
 package com.bupt.service;
 
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Service;
 import com.bupt.mapper.CarDao;
-import com.bupt.pojo.Car;
+import com.bupt.pojoTest.Car;
 
 import java.util.ArrayList;
 import java.util.List;
