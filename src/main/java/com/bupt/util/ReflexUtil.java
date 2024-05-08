@@ -21,22 +21,21 @@ public final class ReflexUtil {
 
     /**
      * 提供对任意实体类的分页查询
-     * @param dao (or mapper)
+     *
+     * @param dao  (or mapper)
      * @param page
-     * @param t  entity
-     * @return 实体 t 的分页查询结果
+     * @param t    entity
      * @param <T>
+     * @return 实体 t 的分页查询结果
      */
-    public static <T> PageResult<T> findPage(BaseMapper<T> dao, Pageable page, T t){
-        List<Filter> lstFilters = new ArrayList<>() ;
-        lstFilters = page.getFilters();
-        QueryWrapper<T> query = getWrapper(lstFilters,t);
+    public static <T> PageResult<T> findPage(BaseMapper<T> dao, Pageable page, T t) {
+        QueryWrapper<T> query = getWrapper(page);
 
         PageResult<T> p = new PageResult<>();
         p.setCurrent(page.getPage()).setSize(page.getSize());
         p.setOrders(page.getOrders());
 
-        dao.selectPage(p,query);
+        dao.selectPage(p, query);
         return p;
 
     }
@@ -45,8 +44,8 @@ public final class ReflexUtil {
         try {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
-            Method method = o.getClass().getMethod(getter, new Class[] {});
-            return method.invoke(o, new Object[] {});
+            Method method = o.getClass().getMethod(getter, new Class[]{});
+            return method.invoke(o, new Object[]{});
         } catch (Exception e) {
             //   log.error(e.getMessage(),e);
             return null;
@@ -92,32 +91,49 @@ public final class ReflexUtil {
         return query;
     }
 
-    public static <T>QueryWrapper<T> getWrapper(List<Filter> lstFilters,T t){
+    public static <T> QueryWrapper<T> getWrapper(Pageable pageable) {
         QueryWrapper<T> query = new QueryWrapper<>();
-        query = getWrapper(t);
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(pageable.getT().getClass());
+        List<TableFieldInfo> tableFieldInfos = tableInfo.getFieldList();
 
+        for (TableFieldInfo d : tableFieldInfos) {
+            String name = d.getField().getName();
+            Object value = getFieldValueByName(name, pageable.getT());
+            if (value != null) {
+                if (d.getField().getType().toString().equalsIgnoreCase("class java.lang.string")) {
+                    if (((String) value).trim().isEmpty())
+                        continue;
+                    query.like(d.getColumn(), value);
+                } else {
+                    query.eq(d.getColumn(), value);
+                }
+            }
+        }
+
+        List<Filter> lstFilters = List.copyOf(pageable.getFilters());
         for (Filter filter : lstFilters) {
-            switch (filter.getOperator()){
+            //todo 前端如何传枚举值
+            switch (filter.getOperator()) {
                 case ct:
-                    query.like(filter.getProperty(),filter.getValue());
+                    query.like(filter.getProperty(), filter.getValue());
                     break;
                 case eq:
-                    query.eq(filter.getProperty(),filter.getValue());
+                    query.eq(filter.getProperty(), filter.getValue());
                     break;
                 case ne:
-                    query.ne(filter.getProperty(),filter.getValue());
+                    query.ne(filter.getProperty(), filter.getValue());
                     break;
                 case ge:
-                    query.ge(filter.getProperty(),filter.getValue());
+                    query.ge(filter.getProperty(), filter.getValue());
                     break;
                 case le:
-                    query.le(filter.getProperty(),filter.getValue());
+                    query.le(filter.getProperty(), filter.getValue());
                     break;
                 case gt:
-                    query.gt(filter.getProperty(),filter.getValue());
+                    query.gt(filter.getProperty(), filter.getValue());
                     break;
                 case lt:
-                    query.lt(filter.getProperty(),filter.getValue());
+                    query.lt(filter.getProperty(), filter.getValue());
                     break;
                 case nn:
                     query.isNotNull(filter.getProperty());
@@ -126,8 +142,8 @@ public final class ReflexUtil {
                     query.isNull(filter.getProperty());
                     break;
                 case il:
-                    List<Object>  lst = Arrays.asList(filter.getValue());
-                    query.in(filter.getProperty(),lst);
+                    List<Object> lst = Arrays.asList(filter.getValue());
+                    query.in(filter.getProperty(), lst);
                     break;
             }
         }
