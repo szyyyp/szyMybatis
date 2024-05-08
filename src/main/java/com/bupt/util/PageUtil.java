@@ -34,38 +34,46 @@ public class PageUtil {
         //循环将查询及查询条件放入 map 交给 beanSearcher 处理
         for (Filter f : filters) {
             //如果携带的运算符为 between、not between、in 则对携带的 value 数组进行处理并将处理之后的结果加入 map 集合
-            if (f.getStringOperator().equals("bt") || f.getStringOperator().equals("nb") || f.getStringOperator().equals("il")) {
-                //如果前端传的 value 是 list 类型才进行处理 否则不处理
-                if (f.getValue() instanceof List) {
-                    String property = f.getProperty();
-                    //将 object 类型的 value 转换为数组类型
-                    Object[] listArray = f.castList(f.getValue(), Object.class);
-                    //通过 for 循环获取数组索引及数组具体值并存入 map 集合
-                    for (int i = 0; i < listArray.length; i++) {
-                        where.put(property + "x" + i, listArray[i]);
+            switch (f.getOperator()) {
+                case bt, nb, il:
+                    //如果前端传的 value 是 list 类型才进行处理 否则不处理
+                    if (f.getValue() instanceof List) {
+                        String property = f.getProperty();
+                        //将 object 类型的 value 转换为数组类型
+                        Object[] listArray = f.castList(f.getValue(), Object.class);
+                        //通过 for 循环获取数组索引及数组具体值并存入 map 集合
+                        for (int i = 0; i < listArray.length; i++) {
+                            where.put(property + "x" + i, listArray[i]);
+                        }
+                        //在 map 集合中添加运算符
+                        String operator = f.getProperty() + "xop";
+                        //f.setOperator(Filter.fromString(f.getStringOperator()));
+                        String operatorValue = f.getOperator().toString();
+                        where.put(operator, operatorValue);
                     }
-                    //在 map 集合中添加运算符
+                    break;
+                default:
+                    //非以上运算符的情况下的逻辑
+
+                    //value 不为空才进行下一步操作 否则直接跳过
+                    if (f.getValue() != null) {
+                        //将筛选属性和值存入 map 集合
+                        where.put(f.getProperty(), f.getValue());
+                    }
+                    //将对应运算符存入 map 集合
                     String operator = f.getProperty() + "xop";
                     f.setOperator(Filter.fromString(f.getStringOperator()));
                     String operatorValue = f.getOperator().toString();
                     where.put(operator, operatorValue);
-                }
-                //非以上运算符的情况下的逻辑
-            } else {
-                //value 不为空才进行下一步操作 否则直接跳过
-                if (f.getValue() != null) {
-                    //将筛选属性和值存入 map 集合
-                    where.put(f.getProperty(), f.getValue());
-                }
-                //将对应运算符存入 map 集合
-                String operator = f.getProperty() + "xop";
-                f.setOperator(Filter.fromString(f.getStringOperator()));
-                String operatorValue = f.getOperator().toString();
-                where.put(operator, operatorValue);
             }
-
         }
         //2024.05.06添加实体类支持
+        addEntityFilters(select, where);
+        //System.out.println(where);
+        return where;
+    }
+
+    private static void addEntityFilters(Pageable select, Map<String, Object> where) throws IllegalAccessException {
         Class clazz = select.getT().getClass();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
@@ -94,8 +102,6 @@ public class PageUtil {
                 }
             }
         }
-        //System.out.println(where);
-        return where;
     }
 }
 

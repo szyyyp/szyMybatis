@@ -33,7 +33,7 @@ public class BeanSearcherTest {
         list.add(0,1);
         list.add(1,2);
         filter.setProperty("score");
-        filter.setStringOperator("il");
+        filter.setOperator(Filter.Operator.il);
         filter.setValue(list);
         filters.add(filter);
         pageable.setOrder("asc");
@@ -63,7 +63,7 @@ public class BeanSearcherTest {
         list.add(0,3387);
         list.add(1,3402);
         filter.setProperty("id");
-        filter.setStringOperator("bt");
+        filter.setOperator(Filter.Operator.bt);
         filter.setValue(list);
         filters.add(filter);
         pageable.setOrder("asc");

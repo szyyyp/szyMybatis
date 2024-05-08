@@ -26,8 +26,8 @@ public class ShiroConfig {
         Map<String, Filter> filters = bean.getFilters();
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/**", "authc");
-        bean.setFilters(filters);//添加过滤器
-        bean.setFilterChainDefinitionMap(filterMap);
+        /*bean.setFilters(filters);//添加过滤器
+        bean.setFilterChainDefinitionMap(filterMap);*/
         return bean;
     }
     //shiro安全管理器

@@ -50,12 +50,12 @@ public class Pageable<T> {
     private Integer size = DEFAULT_SIZE;
 
     /**
-     * 排序属性
+     * 排序属性(beanSearcher专用)
      */
     private String sort = DEFAULT_SORT;
 
     /**
-     * 排序方向
+     * 排序方向(beanSearcher专用)
      */
     private String order = DEFAULT_ORDER;
 
