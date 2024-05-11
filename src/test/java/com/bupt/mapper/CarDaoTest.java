@@ -95,7 +95,7 @@ class CarDaoTest  {
         Car car = new Car();
         car.setBrand("丰田");
         car.setCarNum("111");
-        Pageable pageable = new Pageable();
+        Pageable<Car> pageable = new Pageable<>();
         List<OrderItem> orders = new ArrayList<>();
 
         orders.add(OrderItem.desc("guide_price"));
