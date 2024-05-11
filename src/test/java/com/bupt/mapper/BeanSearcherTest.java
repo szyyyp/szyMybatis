@@ -2,7 +2,7 @@ package com.bupt.mapper;
 
 import com.alibaba.fastjson2.JSON;
 import com.bupt.pojo.Performance;
-import com.bupt.pojo.Student;
+import com.bupt.pojoTest.Car;
 import com.bupt.result.HttpResult;
 import com.bupt.result.HttpResultCodeEnum;
 import com.bupt.result.page.*;
@@ -54,12 +54,12 @@ public class BeanSearcherTest {
 
     @Test
     public void test2() throws IllegalAccessException {
-        Pageable<Student> pageable = new Pageable<>();
+        Pageable<Car> pageable = new Pageable<>();
         Filter filter = new Filter();
         List<Filter> filters = new ArrayList<>();
         List list = new ArrayList();
-        Student s =new Student();
-        s.setClassId(86);
+        Car s =new Car();
+
         list.add(0,3387);
         list.add(1,3402);
         filter.setProperty("id");
@@ -76,10 +76,10 @@ public class BeanSearcherTest {
         Map<String, Object> where = PageUtil.page(pageable);
         System.out.println(where);
         System.out.println("###################");
-        SearchResult<Student> search = beanSearcher.search(Student.class, where);
+        SearchResult<Car> search = beanSearcher.search(Car.class, where);
         System.out.println(search);
         System.out.println("---------------------------------------------");
-        PageResult  v = new PageResult<Student>();
+        PageResult  v = new PageResult<Car>();
         v = v.pageResult(where, search, pageable);
         System.out.println(JSON.toJSON(HttpResult.of(HttpResultCodeEnum.SUCCESS,v)));
     }
