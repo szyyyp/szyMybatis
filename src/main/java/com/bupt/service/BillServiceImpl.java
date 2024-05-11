@@ -31,12 +31,12 @@ public abstract class BillServiceImpl<HeadMapper extends BaseMapper<Head>, Head,
     @Autowired
     DetailMapper detailMapper;
 
-    public Page<Head> findHead(Pageable page,Head h){
-        return ReflexUtil.findPage(headMapper,page,h);
+    public Page<Head> findHead(Pageable<Head> page){
+        return ReflexUtil.findPage(headMapper,page);
     }
 
-    public Page<Detail> findDetail(Pageable page,Detail t){
-        return ReflexUtil.findPage(detailMapper,page,t);
+    public Page<Detail> findDetail(Pageable<Detail> page){
+        return ReflexUtil.findPage(detailMapper,page);
     }
 
     @Transactional

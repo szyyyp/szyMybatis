@@ -68,7 +68,10 @@ public final class ReflexUtil {
     }
 
     public static <T> QueryWrapper<T> getWrapper(Pageable<T> pageable) {
-        QueryWrapper<T> query = (QueryWrapper<T>) getWrapper(pageable.getT().getClass());
+        QueryWrapper<T> query = new QueryWrapper<>();
+        if (pageable.getT()!=null) {
+             query = (QueryWrapper<T>) getWrapper(pageable.getT().getClass());
+        }
 
         List<Filter> lstFilters = List.copyOf(pageable.getFilters());
         for (Filter filter : lstFilters) {

@@ -109,8 +109,8 @@ class CarDaoTest  {
         f.setValue("汽油车");
        // f.setValue(idList);
         pageable.getFilters().add(f);
-
-        System.out.println(JSON.toJSON(carService.findPageInfo(car,pageable)));
+        pageable.setT(car);
+        System.out.println(JSON.toJSON(carService.findPageInfo(pageable)));
     }
     @Test
     void testUerMapper(){

@@ -19,14 +19,14 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T>
     @Autowired
     M dao;
 
-    public PageResult<T> findPageInfo(T t,Pageable p ){
+    public PageResult<T> findPageInfo(Pageable p ){
 
 
-        return ReflexUtil.findPage(dao,p,t);
+        return ReflexUtil.findPage(dao,p);
     }
 
     public <Detail> PageResult<Detail> findDetail(BaseMapper<Detail> detailDao, Pageable page, Detail d){
 
-        return ReflexUtil.findPage(detailDao,page,d);
+        return ReflexUtil.findPage(detailDao,page);
     }
 }
