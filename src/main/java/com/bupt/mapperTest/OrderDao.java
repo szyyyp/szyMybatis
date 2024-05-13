@@ -1,4 +1,4 @@
-package com.bupt.mapper;
+package com.bupt.mapperTest;
 
 import com.bupt.pojoTest.Order;
 

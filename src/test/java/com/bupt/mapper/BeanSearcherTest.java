@@ -1,7 +1,7 @@
 package com.bupt.mapper;
 
 import com.alibaba.fastjson2.JSON;
-import com.bupt.pojo.Performance;
+import com.bupt.pojoTest.Performance;
 import com.bupt.pojoTest.Car;
 import com.bupt.result.HttpResult;
 import com.bupt.result.HttpResultCodeEnum;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
+@SuppressWarnings(value = "all")
 public class BeanSearcherTest {
     @Resource
     BeanSearcher beanSearcher;

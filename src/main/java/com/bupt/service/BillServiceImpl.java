@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ *  这个类基本没有用
  *  所有订单类含有单头和明细的类的公共父类，主要完成：
  * <ol>
       <li>完成表单的增、删、改、分页查</li>
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <DetailMapper> 明细 mapper
  * @param <Detail>  明细pojo
  */
-
+@Deprecated
 @SuppressWarnings({"all"})
 public abstract class BillServiceImpl<HeadMapper extends BaseMapper<Head>, Head,
         DetailMapper extends BaseMapper<Detail> ,Detail>

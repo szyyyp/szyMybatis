@@ -1,4 +1,4 @@
-package com.bupt.pojo;
+package com.bupt.pojoTest;
 
 import com.ejlchina.searcher.bean.SearchBean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,7 +7,6 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author 采购订单表头

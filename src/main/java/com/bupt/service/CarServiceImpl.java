@@ -1,7 +1,7 @@
 package com.bupt.service;
 
 import org.springframework.stereotype.Service;
-import com.bupt.mapper.CarDao;
+import com.bupt.mapperTest.CarDao;
 import com.bupt.pojoTest.Car;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class CarServiceImpl extends BaseServiceImpl<CarDao,Car>  {
     }
 
     public void saveBatch() {
-        long stime = System.currentTimeMillis(); // 统计开始时间
+        long s_time = System.currentTimeMillis(); // 统计开始时间
         List<Car> list = new ArrayList<>();
         for (int i = 0; i < 10000; i++) {
             Car car = new Car();
@@ -27,8 +27,7 @@ public class CarServiceImpl extends BaseServiceImpl<CarDao,Car>  {
         this.saveBatch(list);
 
         long etime = System.currentTimeMillis(); // 统计结束时间
-        System.out.println("执行时间：" + (etime - stime));
+        System.out.println("执行时间：" + (etime - s_time));
     }
-
 
 }

@@ -10,6 +10,7 @@ import com.bupt.result.page.Filter;
 import com.bupt.result.page.Pageable;
 import com.bupt.service.CarServiceImpl;
 import com.bupt.service.UserService;
+import com.bupt.mapperTest.CarDao;
 import com.ejlchina.searcher.BeanSearcher;
 import com.ejlchina.searcher.SearchResult;
 import com.ejlchina.searcher.operator.Contain;
@@ -62,7 +63,7 @@ class CarDaoTest  {
     @Test
     public void insertCar(){
         Car car = new Car(null,"221","丰田",150.00,"新能源","2023-03-06");
-        int i = carDao.insert(car);
+        carDao.insert(car);
 
         System.out.println(car.getId());
     }
@@ -102,12 +103,12 @@ class CarDaoTest  {
         pageable.setOrders(orders);
 
         Filter f = new Filter();
-        f.setProperty("car_type");
+        f.setProperty("id");
         f.setOperator(Filter.Operator.il);
-        List<String> lst = Arrays.asList("汽油车", "新能源");
+        // List<String> lst = Arrays.asList("汽油车", "新能源");
         List<Integer> idList = Arrays.asList(1, 2, 3, 4);
         f.setValue("汽油车");
-       // f.setValue(idList);
+        f.setValue(idList);
         pageable.getFilters().add(f);
         pageable.setT(car);
         System.out.println(JSON.toJSON(carService.findPageInfo(pageable)));

@@ -1,7 +1,7 @@
 package com.bupt.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bupt.mapper.UserMapper;
+import com.bupt.mapperTest.UserMapper;
 import com.bupt.pojoTest.User;
 import org.springframework.stereotype.Service;
 

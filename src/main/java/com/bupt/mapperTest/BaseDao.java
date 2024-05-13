@@ -1,4 +1,4 @@
-package com.bupt.mapper;
+package com.bupt.mapperTest;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

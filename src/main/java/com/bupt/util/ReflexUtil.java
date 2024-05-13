@@ -10,7 +10,6 @@ import com.bupt.result.page.Pageable;
 import com.bupt.result.page.Filter;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.List;
 
 public final class ReflexUtil {
@@ -106,8 +105,11 @@ public final class ReflexUtil {
                     query.isNull(filter.getProperty());
                     break;
                 case il:
-                    List<Object> lst = Collections.singletonList(filter.getValue());
-                    query.in(filter.getProperty(), lst);
+                    if (filter.getValue()!=null) {
+                        @SuppressWarnings(value = "unchecked")
+                        List<Object> lst = (List<Object>) filter.getValue();
+                        query.in(filter.getProperty(), lst);
+                    }
                     break;
             }
         }
